@@ -1,10 +1,6 @@
-import codecs
 import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as stc
-from datetime import datetime
-from PIL import Image
-# from utils.helper import predict
 from pycaret.classification import load_model,predict_model
 import warnings
 warnings.filterwarnings("ignore")
@@ -19,24 +15,31 @@ st.set_option("deprecation.showfileUploaderEncoding", False)
 st.set_page_config(page_title='cardiovascular-disease-prediction-system',
     layout='wide')
 #---------------------------------#
-# PATH = "../models/"
+
+
+# Removing streamlit water mark
+hide_streamlit_style = """
+        <style>
+        footer {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+#Loadind the dataset
 @st.cache(allow_output_mutation=True)
 def model():
-	model=load_model('models-v1-11-06-2022')
+	model=load_model('./Models/models-v1-11-06-2022')
 	return model
 
-
-# image1 = Image.open('images/24315644_2202_w037_n003_186a_p1_186.jpg')
-# filedoc = codecs.open("markdown/documentation.md", "r", "utf-8")
-
 def run(): 
-    tab1, tab2, tab3 = st.tabs(["Home", "Prediction Form", "About"])
+    tab1, tab2, tab3 = st.tabs(["Home", "Resources ", "Changelog"])
     with tab1:
         stc.html("""
                 <div style="background-color:#31333F;padding:10px;border-radius:10px">
                 <h1 style="color:white;text-align:center;">Cardiovascular Disease Prediction System</h1>
                 </div>""")
-        
+        st.write("This application is meant to assist doctors in diagnosing, if a patient has cardiovascular Disease or not using few details about their health")
+        st.write("Please Enter the below details to know the results")
         with st.form(key='mlform'):
             col1, col2 = st.columns(2)
             with col1:
@@ -82,10 +85,26 @@ def run():
     
         
     with tab2:
-        pass
-        
+        col1, col2= st.columns(2)
+        with col1:
+            st.video("https://www.youtube.com/watch?v=lTCF8y7e1Bw")
+            st.subheader("Cardiovascular Disease Overview")
+
+        with col2:
+            st.video("https://www.youtube.com/watch?v=Sc3IN99sRrI")
+            st.subheader("Cardiovascular System Anatomy")
+        col3,col4= st.columns(2)
+        with col3:
+            st.video("https://www.youtube.com/watch?v=frUxLyipCJY")
+            st.subheader("Common Symptoms of Cardiovascular Disease ")
+
+        with col4:
+            st.video("https://www.youtube.com/watch?v=vqaja_LD1Kk")
+            st.subheader("Coronary Artery Disease, Causes, Signs and Symptoms, Diagnosis and Treatment")
+             
     with tab3:
-        pass
+        st.subheader("Your Appliction and AI model is up to date, Admin would let you know when new model is out ")
+        
              
 if __name__ == '__main__':
     run()
