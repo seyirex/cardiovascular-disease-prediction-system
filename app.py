@@ -28,7 +28,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 #Loadind the dataset
 @st.cache(allow_output_mutation=True)
 def model():
-	model=load_model('./Models/models-v1-11-06-2022')
+	model=load_model('./Models/models-v2-11-08-2022')
 	return model
 
 def run(): 
