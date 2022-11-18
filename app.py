@@ -1,3 +1,4 @@
+# importing core lib
 import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as stc
@@ -40,8 +41,10 @@ def run():
                 </div>""")
         st.write("This application is meant to assist doctors in diagnosing, if a patient has cardiovascular Disease or not using few details about their health")
         st.write("Please Enter the below details to know the results")
+         
         with st.form(key='mlform'):
             col1, col2 = st.columns(2)
+            
             with col1:
                 age=st.number_input("Age",0,65)
                 gender=st.number_input("gender (0: 'Male', 1: 'Female')",0,1)
@@ -74,13 +77,14 @@ def run():
         if submit_message:
             with st.spinner('Prediction in Progress. Please Wait...'):
                 predictions_df = predict_model(estimator=model(), data=df)
-                predictions = predictions_df['Label'][0]
-                if predictions == 0:
-                    st.success('No Cardiovascular disease detected')
+                predictions_label = predictions_df['Label'][0]
+                predictions_score = predictions_df['Score'][0]
+                print(predictions_score)
+                if predictions_label == 0:
+                    st.success(f'No Cardiovascular disease detected, confidence Score {predictions_score}')
                     st.write('✨Keep it up!✨')
-                    st.balloons()
                 else:
-                    st.warning('Cardiovascular diseas detected')
+                    st.warning(f'Cardiovascular disease detected,confidence Score {predictions_score}')
                     st.write('Please consult doctor for further information.')
     
         
